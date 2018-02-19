@@ -8,10 +8,7 @@ def create_table(pandas_df, db_con, table_name):
 	print('Table {} created.'.format(table_name))
 	return True
 
-
-if __name__ == '__main__':
-	
-	## database connection
+def establish_connection():
 	with open('local_creds.yml', 'rb') as yml_file:
 		credentials = yaml.safe_load(yml_file)['Postgres']
 	engine = create_engine('postgresql://{}:{}@{}:{}/{}'.format(
@@ -22,7 +19,12 @@ if __name__ == '__main__':
 																															credentials['database']
 																															)
 						)
-	db_con = engine.connect()
+	return engine.connect()
+
+if __name__ == '__main__':
+	
+	## database connection
+	db_con = establish_connection()
 
 	## extract and load
 	customers_file = pd.read_csv('data/customers.csv', parse_dates=['signup_date'])
