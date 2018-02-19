@@ -1,5 +1,6 @@
 # MacOS System
 *.DS_Store
+*.yml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
