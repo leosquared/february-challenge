@@ -1,11 +1,17 @@
 from sqlalchemy import create_engine
 import yaml
 import pandas as pd
+import logging
+
+## logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def create_table(pandas_df, db_con, table_name):
 	db_con.execute('DROP TABLE IF EXISTS {};'.format(table_name))
 	pandas_df.to_sql(table_name, db_con, index=False)
-	print('Table {} created.'.format(table_name))
+	logger.info('Table {} created.'.format(table_name))
 	return True
 
 def establish_connection():
@@ -83,5 +89,5 @@ if __name__ == '__main__':
 		COMMIT;
 		"""
 	db_con.execute(sql_statement)
-	print('Aggregation finished.')
+	logger.info('Aggregation finished.')
 
