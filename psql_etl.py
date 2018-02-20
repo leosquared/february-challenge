@@ -19,7 +19,7 @@ def establish_connection():
 																															credentials['database']
 																															)
 						)
-	return engine.connect()
+	return engine
 
 if __name__ == '__main__':
 	
@@ -54,7 +54,7 @@ if __name__ == '__main__':
 			, SUM(point_differential) OVER(PARTITION BY user_id ORDER BY date ASC) AS standard_points
 			, (point_differential - (value / 100 * 10)) / 5050 * -1 AS number_of_redemptions
 			, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY date ASC) AS transaction_order
-			, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY date ASC) AS transaction_recency
+			, ROW_NUMBER() OVER(PARTITION BY user_id ORDER BY date DESC) AS transaction_recency
 			FROM transactions
 		)
 		;
@@ -79,6 +79,8 @@ if __name__ == '__main__':
 		) td 
 		WHERE c.id = td.user_id
 		;
+
+		COMMIT;
 		"""
 	db_con.execute(sql_statement)
 	print('Aggregation finished.')
