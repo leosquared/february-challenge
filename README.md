@@ -29,3 +29,10 @@
 	- Design experiments aimed at minimizing drop off rates between purchases
 	- Implement different levels of points, with potentially larger discounts, since current "revenue loss" is a small fraction
 	- Test various campaigns to raise awareness of points programs
+
+### Classification Model
+The classification task proves to be a difficult one due to the following reasons:
+- The list of data features *age*, *location*, *gender*, and *favorite movie line* each has a half of the population's values removed, but due to the random nature of such removal, the available sample becomes much smaller the more features are selected
+- The derived numeric features have better coverage, at 77%, but the remaining 23% would be hard to classify with so many missing features
+Using raw features, a model is only able to achieve a 53% precision on predicting the *location* label with three possible classes. A Support Vector Machine was used in this case.
+If the features are combined into fewer classes, for example, predicting if a customer is from the East Coast (NYC) or West Coast (LA or SF), the model is able to achieve a precision of 76%. 
